@@ -15,7 +15,7 @@
         "to": ""
     },
     {
-        "name": "Central London July 2023",
+        "name": "Central London Anytime",
         "bounds": {
             "ne": {
             "lat": 51.529581323085495,
@@ -26,8 +26,8 @@
             "lon": -0.16191283079675187
             }
         },
-        "from": "2023-07-16",
-        "to": "2023-07-20"
+        "from": "",
+        "to": ""
     },
     {
         "name": "Central Madrid July 2023",
