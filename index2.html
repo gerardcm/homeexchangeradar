@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Map Example</title>
+    <style>
+        #maps{
+            width: 800px;
+        }
+      .map {
+        height: 400px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+
+      .map-container {
+        margin-bottom: 20px;
+      }
+
+      .map-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .map-subtitle {
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="maps"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
+    />
+
+    <script>
+      async function fetchData() {
+        const url =
+          "https://raw.githubusercontent.com/gerardcm/homeexchangeradar/main/searches.json";
+        const token = "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";
+
+        try {
+          const response = await fetch(url, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          processJSONData(data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      fetchData();
+
+      function processJSONData(data) {
+        data.forEach(function (item) {
+            console.log(item)
+          var mapId = item.name.replace(/[^a-zA-Z0-9]/g, "").toLowerCase(); // Generate a unique ID for each map
+
+          var mapContainer = document.createElement("div");
+          mapContainer.id = mapId;
+          mapContainer.className = "map";
+
+          var mapTitle = document.createElement("div");
+          mapTitle.className = "map-title";
+          mapTitle.textContent = item.name;
+
+          var mapSubtitle = document.createElement("div");
+          mapSubtitle.className = "map-subtitle";
+          mapSubtitle.textContent = "From: " + item.from + " To: " + item.to;
+
+          var mapWrapper = document.createElement("div");
+          mapWrapper.className = "map-container";
+          mapWrapper.appendChild(mapTitle);
+          mapWrapper.appendChild(mapSubtitle);
+          mapWrapper.appendChild(mapContainer);
+
+          document.getElementById("maps").appendChild(mapWrapper);
+
+          var map = L.map(mapId).fitBounds([
+            [item.bounds.sw.lat, item.bounds.sw.lon],
+            [item.bounds.ne.lat, item.bounds.ne.lon],
+          ]);
+
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "&copy; OpenStreetMap contributors",
+          }).addTo(map);
+
+          L.rectangle(
+            [
+              [item.bounds.sw.lat, item.bounds.sw.lon],
+              [item.bounds.ne.lat, item.bounds.ne.lon],
+            ],
+            { color: "red", weight: 2 }
+          )
+            .addTo(map)
+            .bindPopup(item.name);
+
+          L.marker([item.bounds.sw.lat, item.bounds.sw.lon])
+            .addTo(map)
+            .bindPopup("Southwest Coordinate");
+
+          L.marker([item.bounds.ne.lat, item.bounds.ne.lon])
+            .addTo(map)
+            .bindPopup("Northeast Coordinate");
+        });
+      }
+    </script>
+  </body>
+</html>
