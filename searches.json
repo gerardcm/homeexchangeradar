@@ -1,5 +1,6 @@
 [
     {
+        "active": true
         "name": "Central London Anytime",
         "bounds": {
             "ne": {
@@ -15,6 +16,7 @@
         "to": ""
     },
     {
+        "active": true
         "name": "LA February",
         "bounds": {
             "ne": {, 
@@ -30,6 +32,7 @@
         "to": "2024-02-25"
     },
     {
+        "active": false
         "name": "Central Madrid July 2023",
         "bounds": {
             "ne": {
@@ -45,7 +48,8 @@
         "to": "2023-07-22"
     },
     {
-        "name": "Central Madrid Pride 2023",
+        "active": true
+        "name": "Central Madrid anytime",
         "bounds": {
             "ne": {
             "lat": 40.428620012728395,
@@ -56,10 +60,11 @@
             "lon": -3.716147189277329
             }
         },
-        "from": "2023-06-30",
-        "to": "2023-07-03"
+        "from": "",
+        "to": ""
     },
     {
+        "active": true
         "name": "Central Paris Pride 2024",
         "bounds": {
             "ne": {
@@ -75,6 +80,7 @@
         "to": "2024-06-24"
     },
     {
+        "active": true
         "name": "Central Paris Papas 2024",
         "bounds": {
             "ne": {
@@ -90,6 +96,7 @@
         "to": "2024-01-20"
     },
     {
+        "active": true
         "name": "Central Paris Papas extended 2024",
         "bounds": {
             "ne": {
@@ -105,6 +112,7 @@
         "to": "2024-01-20"
     },
     {
+        "active": false
         "name": "Seoul Anyime",
         "bounds": {
             "ne": {
@@ -120,6 +128,7 @@
         "to": ""
     },
     {
+        "active": false
         "name": "Manila Anyime",
         "bounds": {
             "ne": {
@@ -135,6 +144,7 @@
         "to": ""
     },
     {
+        "active": true
         "name": "Central Ibiza Anyime",
         "bounds": {
             "ne": {
@@ -150,6 +160,7 @@
         "to": ""
     },
     {
+        "active": true
         "name": "Ibiza Anyime",
         "bounds": {
             "ne": {
