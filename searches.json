@@ -1,6 +1,6 @@
 [
     {
-        "active": true
+        "active": true,
         "name": "Central London Anytime",
         "bounds": {
             "ne": {
@@ -16,7 +16,7 @@
         "to": ""
     },
     {
-        "active": true
+        "active": true,
         "name": "LA February",
         "bounds": {
             "ne": {, 
@@ -32,7 +32,7 @@
         "to": "2024-02-25"
     },
     {
-        "active": false
+        "active": false,
         "name": "Central Madrid July 2023",
         "bounds": {
             "ne": {
@@ -48,7 +48,7 @@
         "to": "2023-07-22"
     },
     {
-        "active": true
+        "active": true,
         "name": "Central Madrid anytime",
         "bounds": {
             "ne": {
@@ -64,7 +64,7 @@
         "to": ""
     },
     {
-        "active": true
+        "active": true,
         "name": "Central Paris Pride 2024",
         "bounds": {
             "ne": {
@@ -80,7 +80,7 @@
         "to": "2024-06-24"
     },
     {
-        "active": true
+        "active": true,
         "name": "Central Paris Papas 2024",
         "bounds": {
             "ne": {
@@ -96,7 +96,7 @@
         "to": "2024-01-20"
     },
     {
-        "active": true
+        "active": true,
         "name": "Central Paris Papas extended 2024",
         "bounds": {
             "ne": {
@@ -112,7 +112,7 @@
         "to": "2024-01-20"
     },
     {
-        "active": false
+        "active": false,
         "name": "Seoul Anyime",
         "bounds": {
             "ne": {
@@ -128,7 +128,7 @@
         "to": ""
     },
     {
-        "active": false
+        "active": false,
         "name": "Manila Anyime",
         "bounds": {
             "ne": {
@@ -144,7 +144,7 @@
         "to": ""
     },
     {
-        "active": false
+        "active": false,
         "name": "Central Ibiza Anyime",
         "bounds": {
             "ne": {
@@ -160,7 +160,7 @@
         "to": ""
     },
     {
-        "active": false
+        "active": false,
         "name": "Ibiza Anyime",
         "bounds": {
             "ne": {
