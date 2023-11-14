@@ -144,7 +144,7 @@
         "to": ""
     },
     {
-        "active": true
+        "active": false
         "name": "Central Ibiza Anyime",
         "bounds": {
             "ne": {
@@ -160,7 +160,7 @@
         "to": ""
     },
     {
-        "active": true
+        "active": false
         "name": "Ibiza Anyime",
         "bounds": {
             "ne": {
