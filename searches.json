@@ -77,10 +77,10 @@
             }
         },
         "from": "2024-06-20",
-        "to": "2024-06-24"
+        "to": "2024-06-23"
     },
     {
-        "active": true,
+        "active": false,
         "name": "Central Paris Papas 2024",
         "bounds": {
             "ne": {
@@ -97,7 +97,7 @@
     },
     {
         "active": true,
-        "name": "Central Paris Papas extended 2024",
+        "name": "Central Paris Pride extended 2024",
         "bounds": {
             "ne": {
             "lat": 48.87071201959405,
@@ -108,8 +108,8 @@
             "lon": 2.280430383007683
             }
         },
-        "from": "2024-01-19",
-        "to": "2024-01-20"
+        "from": "2024-06-20",
+        "to": "2024-06-23"
     },
     {
         "active": false,
@@ -144,7 +144,7 @@
         "to": ""
     },
     {
-        "active": false,
+        "active": true,
         "name": "Central Ibiza Anyime",
         "bounds": {
             "ne": {
