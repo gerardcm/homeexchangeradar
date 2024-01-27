@@ -1,6 +1,22 @@
 [
     {
         "active": true,
+        "name": "Tel Aviv Anytime",
+        "bounds": {
+            "ne": {
+            "lat": 32.129199595018804,
+            "lon": 34.8576660429074
+            },
+            "sw": {
+            "lat": 32.030584437016465,
+            "lon": 34.727546724847116
+            }
+        },
+        "from": "",
+        "to": ""
+    },
+    {
+        "active": true,
         "name": "Central London Anytime",
         "bounds": {
             "ne": {
