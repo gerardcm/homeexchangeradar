@@ -1,6 +1,6 @@
 [
     {
-        "active": true,
+        "active": false,
         "name": "Tel Aviv Anytime",
         "bounds": {
             "ne": {
@@ -32,7 +32,7 @@
         "to": ""
     },
     {
-        "active": true,
+        "active": false,
         "name": "LA February",
         "bounds": {
             "ne": {
@@ -92,8 +92,8 @@
             "lon": 2.321534984515923
             }
         },
-        "from": "2024-06-20",
-        "to": "2024-06-23"
+        "from": "2024-06-23",
+        "to": "2024-06-24"
     },
     {
         "active": false,
@@ -124,8 +124,8 @@
             "lon": 2.280430383007683
             }
         },
-        "from": "2024-06-20",
-        "to": "2024-06-23"
+        "from": "2024-06-23",
+        "to": "2024-06-25"
     },
     {
         "active": false,
