@@ -176,8 +176,8 @@
         "to": ""
     },
     {
-        "active": false,
-        "name": "Ibiza Anyime",
+        "active": true,
+        "name": "Ibiza July",
         "bounds": {
             "ne": {
             "lat": 39.134800477777205, 
@@ -188,7 +188,7 @@
             "lon": 1.181910579959838
             }
         },
-        "from": "",
-        "to": ""
+        "from": "2024-07-10",
+        "to": "2024-07-11"
     }
 ]
