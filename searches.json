@@ -81,7 +81,7 @@
     },
     {
         "active": true,
-        "name": "Central Paris Pride 2024",
+        "name": "Central Paris Pride 2025",
         "bounds": {
             "ne": {
             "lat": 48.86778187802369,
@@ -92,8 +92,8 @@
             "lon": 2.321534984515923
             }
         },
-        "from": "2024-06-25",
-        "to": "2024-06-27"
+        "from": "2025-06-21",
+        "to": "2025-06-27"
     },
     {
         "active": false,
@@ -113,7 +113,7 @@
     },
     {
         "active": true,
-        "name": "Central Paris Pride extended 2024",
+        "name": "Central Paris Pride extended 2025",
         "bounds": {
             "ne": {
             "lat": 48.87071201959405,
@@ -124,8 +124,8 @@
             "lon": 2.280430383007683
             }
         },
-        "from": "2024-06-25",
-        "to": "2024-06-27"
+        "from": "2025-06-21",
+        "to": "2025-06-27"
     },
     {
         "active": false,
