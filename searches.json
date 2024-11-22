@@ -33,7 +33,7 @@
     },
     {
         "active": true,
-        "name": "LA March",
+        "name": "LA March 2",
         "bounds": {
             "ne": {
             "lat": 34.18090607814766,
@@ -49,7 +49,7 @@
     },
     {
         "active": true,
-        "name": "LA February",
+        "name": "LA march 1",
         "bounds": {
             "ne": {
             "lat": 34.18090607814766,
@@ -60,8 +60,8 @@
             "lon": -118.77646419695957
             }
         },
-        "from": "2025-02-15",
-        "to": "2025-02-25"
+        "from": "2025-03-13",
+        "to": "2025-02-15"
     },
     {
         "active": false,
@@ -192,7 +192,7 @@
         "to": ""
     },
     {
-        "active": true,
+        "active": false,
         "name": "Ibiza July",
         "bounds": {
             "ne": {
@@ -208,7 +208,7 @@
         "to": "2024-07-11"
     },
     {
-        "active": true,
+        "active": false,
         "name": "NYC November",
         "bounds": {
             "ne": {
@@ -224,7 +224,7 @@
         "to": "2024-11-15"
     },
     {
-        "active": true,
+        "active": false,
         "name": "NYC Oct November",
         "bounds": {
             "ne": {
