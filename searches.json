@@ -65,7 +65,7 @@
     },
     {
         "active": false,
-        "name": "Central Madrid July 2023",
+        "name": "Central Madrid July 2025",
         "bounds": {
             "ne": {
             "lat": 40.428620012728395,
@@ -76,8 +76,8 @@
             "lon": -3.716147189277329
             }
         },
-        "from": "2023-07-16",
-        "to": "2023-07-22"
+        "from": "2025-07-06",
+        "to": "2025-07-07"
     },
     {
         "active": true,
