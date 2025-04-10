@@ -64,7 +64,7 @@
         "to": "2025-02-15"
     },
     {
-        "active": false,
+        "active": true,
         "name": "Central Madrid July 2025",
         "bounds": {
             "ne": {
