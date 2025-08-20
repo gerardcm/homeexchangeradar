@@ -33,7 +33,7 @@
     },
     {
         "active": true,
-        "name": "LA March 2",
+        "name": "LA Feb 2",
         "bounds": {
             "ne": {
             "lat": 34.18090607814766,
@@ -44,8 +44,8 @@
             "lon": -118.77646419695957
             }
         },
-        "from": "2025-03-15",
-        "to": "2025-03-16"
+        "from": "2026-02-05",
+        "to": "2026-02-06"
     },
     {
         "active": true,
@@ -60,11 +60,11 @@
             "lon": -118.77646419695957
             }
         },
-        "from": "2025-03-13",
-        "to": "2025-02-15"
+        "from": "2026-02-10",
+        "to": "2026-02-11"
     },
     {
-        "active": true,
+        "active": false,
         "name": "Central Madrid July 2025",
         "bounds": {
             "ne": {
@@ -80,7 +80,7 @@
         "to": "2025-07-07"
     },
     {
-        "active": true,
+        "active": false,
         "name": "Central Madrid anytime",
         "bounds": {
             "ne": {
@@ -97,7 +97,7 @@
     },
     {
         "active": true,
-        "name": "Central Paris Pride 2025",
+        "name": "Central Paris Pride 2026",
         "bounds": {
             "ne": {
             "lat": 48.86778187802369,
@@ -108,8 +108,8 @@
             "lon": 2.321534984515923
             }
         },
-        "from": "2025-06-21",
-        "to": "2025-06-27"
+        "from": "2026-06-20",
+        "to": "2026-06-27"
     },
     {
         "active": false,
@@ -128,7 +128,7 @@
         "to": "2024-01-20"
     },
     {
-        "active": true,
+        "active": false,
         "name": "Central Paris Pride extended 2025",
         "bounds": {
             "ne": {
@@ -176,7 +176,7 @@
         "to": ""
     },
     {
-        "active": true,
+        "active": false,
         "name": "Central Ibiza Anyime",
         "bounds": {
             "ne": {
@@ -192,7 +192,7 @@
         "to": ""
     },
     {
-        "active": true,
+        "active": false,
         "name": "Ibiza anytime",
         "bounds": {
             "ne": {
