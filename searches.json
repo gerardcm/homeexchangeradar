@@ -128,8 +128,8 @@
         "to": "2024-01-20"
     },
     {
-        "active": false,
-        "name": "Central Paris Pride extended 2025",
+        "active": true,
+        "name": "Central Paris Pride extended 2026",
         "bounds": {
             "ne": {
             "lat": 48.87071201959405,
@@ -140,8 +140,8 @@
             "lon": 2.280430383007683
             }
         },
-        "from": "2025-06-21",
-        "to": "2025-06-27"
+        "from": "2026-06-21",
+        "to": "2026-06-27"
     },
     {
         "active": false,
