@@ -257,7 +257,7 @@
         "to": "2024-11-01"
     },
         {
-        "active": true,
+        "active": false,
         "name": "NYC Oct November",
         "bounds": {
             "ne": {
