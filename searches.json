@@ -50,6 +50,7 @@
     {
         "active": true,
         "name": "LA Feb 2 2026",
+        "flexibility": 3,
         "bounds": {
             "ne": {
             "lat": 34.27823558917719,
@@ -66,6 +67,7 @@
     {
         "active": true,
         "name": "LA feb 1 2026",
+        "flexibility": 3,
         "bounds": {
             "ne": {
             "lat": 34.27823558917719,
@@ -114,6 +116,7 @@
     {
         "active": true,
         "name": "Central Paris Pride 26",
+        "flexibility": 3,
         "bounds": {
             "ne": {
             "lat": 48.86778187802369,
