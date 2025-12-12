@@ -1,6 +1,6 @@
 [
         {
-        "active": false,
+        "active": true,
         "name": "SF Feb 2026",
         "bounds": {
             "ne": {
@@ -12,8 +12,8 @@
             "lon": -122.5402672910776
             }
         },
-        "from": "",
-        "to": ""
+        "from": "2026-02-13",
+        "to": "2026-02-16"
     },
     {
         "active": false,
