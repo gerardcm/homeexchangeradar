@@ -1,4 +1,20 @@
 [
+        {
+        "active": false,
+        "name": "SF Feb 2026",
+        "bounds": {
+            "ne": {
+            "lat": 37.833880446147944,
+            "lon": -122.37243836481973
+            },
+            "sw": {
+            "lat": 37.58690971333325,
+            "lon": -122.5402672910776
+            }
+        },
+        "from": "",
+        "to": ""
+    },
     {
         "active": false,
         "name": "Tel Aviv Anytime",
