@@ -15,20 +15,6 @@
         "from": "2026-08-11",
         "to": "2026-08-13"
     },
-                {
-        "active": true,
-        "name": "Mediterranean beach house 2026",
-        "bounds": {
-            "ne": {
-            "lat": 42.401469,
-            "lon": 30.580504
-            },
-            "sw": {
-            "lat": 34.89991978858154,
-            "lon": -2.5841042837050563
-            }
-        }
-    },
         {
         "active": true,
         "name": "SF Feb 2026",
