@@ -15,7 +15,7 @@
     "to": "2027-04-11"
 },
         {
-        "active": true,
+        "active": false,
         "name": "mallorca mayo 2026 2",
         "bounds": {
             "ne": {
@@ -111,7 +111,7 @@
         "to": ""
     },
     {
-        "active": true,
+        "active": false,
         "name": "Los angeles April 2026",
         "bounds": {
             "ne": {
@@ -127,7 +127,7 @@
         "to": "2026-04-04"
     },
     {
-        "active": true,
+        "active": false,
         "name": "LA Feb 2 2026",
         "flexibility": 3,
         "bounds": {
@@ -144,7 +144,7 @@
         "to": "2026-02-06"
     },
     {
-        "active": true,
+        "active": false,
         "name": "LA feb 1 2026",
         "flexibility": 3,
         "bounds": {
@@ -194,7 +194,7 @@
     },
     {
         "active": true,
-        "name": "Central Paris 26",
+        "name": "Central Paris 27",
         "flexibility": 10,
         "bounds": {
             "ne": {
@@ -206,8 +206,8 @@
             "lon": 2.321534984515923
             }
         },
-        "from": "2026-06-19",
-        "to": "2026-06-20"
+        "from": "2027-06-19",
+        "to": "2027-06-20"
     },
     {
         "active": false,
@@ -226,7 +226,7 @@
         "to": "2024-01-20"
     },
     {
-        "active": true,
+        "active": false,
         "name": "Central Paris extended 2026",
         "bounds": {
             "ne": {
