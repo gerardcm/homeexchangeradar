@@ -3,31 +3,207 @@
   <head>
     <title>Map Example</title>
     <style>
-        #maps{
-            width: 800px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f8f9fb;
+      }
+
+      h1 {
+        margin-bottom: 8px;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 20px;
+      }
+
+      .panel {
+        background: white;
+        border: 1px solid #d8dde6;
+        border-radius: 10px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+
+      .panel h2 {
+        margin-top: 0;
+        font-size: 18px;
+      }
+
+      .control-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 13px;
+        color: #333;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccd3dc;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        min-height: 160px;
+        resize: vertical;
+      }
+
+      button {
+        padding: 10px 14px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      button.primary {
+        background: #007bff;
+        color: white;
+      }
+
+      button.secondary {
+        background: #e9ecef;
+        color: #212529;
+      }
+
       .map {
-        height: 400px;
-        margin-bottom: 10px;
+        width: 100%;
+        height: 360px;
+        border-radius: 10px;
+        overflow: hidden;
         margin-top: 10px;
       }
 
-      .map-container {
-        margin-bottom: 20px;
+      #maps {
+        margin-top: 20px;
       }
 
-      .map-title {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 5px;
+      .map-card {
+        border: 1px solid #d8dde6;
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 18px;
+        background: #ffffff;
       }
 
-      .map-subtitle {
-        font-size: 14px;
+      .map-card h3 {
+        margin: 0 0 6px 0;
+        font-size: 16px;
+      }
+
+      .map-card small {
+        color: #5a6670;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .full-width {
+        grid-column: 1 / -1;
+      }
+
+      .bottom-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .hidden {
+        display: none;
       }
     </style>
   </head>
   <body>
+    <h1>Home Exchange Radar</h1>
+    <p>Create and preview locations, then copy the JSON output.</p>
+
+    <div class="layout">
+      <div class="panel">
+        <h2>Location picker</h2>
+        <div class="control-row">
+          <div style="flex: 1">
+            <label for="location-picker">Choose existing location</label>
+            <select id="location-picker"></select>
+          </div>
+          <button id="load-location" class="secondary" type="button">Load</button>
+        </div>
+
+        <div class="map" id="preview-map"></div>
+
+        <div class="control-row">
+          <button id="add-location" class="primary" type="button">Add / Update form</button>
+          <button id="generate-json" class="secondary" type="button">Generate JSON</button>
+          <button id="copy-json" class="secondary" type="button">Copy JSON</button>
+        </div>
+
+        <div class="bottom-actions">
+          <span id="status-message"></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Location form</h2>
+        <div class="field-grid">
+          <div>
+            <label for="active">Active</label>
+            <input id="active" type="checkbox" />
+          </div>
+          <div class="full-width">
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="mallorca mayo 2026 2" />
+          </div>
+          <div>
+            <label for="from-date">From</label>
+            <input id="from-date" type="date" />
+          </div>
+          <div>
+            <label for="to-date">To</label>
+            <input id="to-date" type="date" />
+          </div>
+          <div>
+            <label for="sw-lat">SW latitude</label>
+            <input id="sw-lat" type="number" step="0.000001" placeholder="39.26" />
+          </div>
+          <div>
+            <label for="sw-lon">SW longitude</label>
+            <input id="sw-lon" type="number" step="0.000001" placeholder="2.32" />
+          </div>
+          <div>
+            <label for="ne-lat">NE latitude</label>
+            <input id="ne-lat" type="number" step="0.000001" placeholder="39.96" />
+          </div>
+          <div>
+            <label for="ne-lon">NE longitude</label>
+            <input id="ne-lon" type="number" step="0.000001" placeholder="3.48" />
+          </div>
+        </div>
+
+        <div style="margin-top: 18px">
+          <label for="json-output">Generated JSON</label>
+          <textarea id="json-output" readonly></textarea>
+        </div>
+      </div>
+    </div>
+
     <div id="maps"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
@@ -37,52 +213,79 @@
     />
 
     <script>
+      const apiUrl =
+        "https://raw.githubusercontent.com/gerardcm/homeexchangeradar/main/searches.json";
+      let locations = [];
+      let previewMap;
+      let previewLayer;
+      let previewMarkers = [];
+
       async function fetchData() {
-  const url = "https://raw.githubusercontent.com/gerardcm/homeexchangeradar/main/searches.json";
+        try {
+          const response = await fetch(apiUrl);
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+          locations = data;
+          populatePicker();
+          renderExistingMaps();
+          initializePreviewMap();
+          if (locations.length > 0) {
+            loadFormFromLocation(0);
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          setStatus("Could not load existing locations.", true);
+        }
+      }
 
-  try {
-    const response = await fetch(url);
+      function initializePreviewMap() {
+        previewMap = L.map("preview-map").setView([20, 0], 2);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "&copy; OpenStreetMap contributors",
+        }).addTo(previewMap);
+      }
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+      function populatePicker() {
+        const picker = document.getElementById("location-picker");
+        picker.innerHTML = "";
+        locations.forEach((item, index) => {
+          const option = document.createElement("option");
+          option.value = index;
+          option.textContent = item.name;
+          picker.appendChild(option);
+        });
+      }
 
-    const data = await response.json();
+      function renderExistingMaps() {
+        const mapsContainer = document.getElementById("maps");
+        mapsContainer.innerHTML = "";
 
-    processJSONData(data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
+        locations.forEach((item, index) => {
+          const mapId = `map-${index}`;
 
-      fetchData();
+          const wrapper = document.createElement("div");
+          wrapper.className = "map-card";
 
-      function processJSONData(data) {
-        data.forEach(function (item) {
-            console.log(item)
-          var mapId = item.name.replace(/[^a-zA-Z0-9]/g, "").toLowerCase(); // Generate a unique ID for each map
+          const title = document.createElement("h3");
+          title.textContent = item.name;
+          const subtitle = document.createElement("small");
+          subtitle.textContent = `From: ${item.from} — To: ${item.to}`;
 
-          var mapContainer = document.createElement("div");
-          mapContainer.id = mapId;
-          mapContainer.className = "map";
+          const mapDiv = document.createElement("div");
+          mapDiv.id = mapId;
+          mapDiv.className = "map";
 
-          var mapTitle = document.createElement("div");
-          mapTitle.className = "map-title";
-          mapTitle.textContent = item.name;
+          wrapper.appendChild(title);
+          wrapper.appendChild(subtitle);
+          wrapper.appendChild(mapDiv);
+          mapsContainer.appendChild(wrapper);
 
-          var mapSubtitle = document.createElement("div");
-          mapSubtitle.className = "map-subtitle";
-          mapSubtitle.textContent = "From: " + item.from + " To: " + item.to;
-
-          var mapWrapper = document.createElement("div");
-          mapWrapper.className = "map-container";
-          mapWrapper.appendChild(mapTitle);
-          mapWrapper.appendChild(mapSubtitle);
-          mapWrapper.appendChild(mapContainer);
-
-          document.getElementById("maps").appendChild(mapWrapper);
-
-          var map = L.map(mapId).fitBounds([
+          const map = L.map(mapId, {
+            zoomControl: false,
+            attributionControl: false,
+          }).fitBounds([
             [item.bounds.sw.lat, item.bounds.sw.lon],
             [item.bounds.ne.lat, item.bounds.ne.lon],
           ]);
@@ -100,16 +303,157 @@
           )
             .addTo(map)
             .bindPopup(item.name);
-
-          L.marker([item.bounds.sw.lat, item.bounds.sw.lon])
-            .addTo(map)
-            .bindPopup("Southwest Coordinate");
-
-          L.marker([item.bounds.ne.lat, item.bounds.ne.lon])
-            .addTo(map)
-            .bindPopup("Northeast Coordinate");
         });
       }
+
+      function getFormLocation() {
+        return {
+          active: document.getElementById("active").checked,
+          name: document.getElementById("name").value.trim(),
+          bounds: {
+            ne: {
+              lat: parseFloat(document.getElementById("ne-lat").value),
+              lon: parseFloat(document.getElementById("ne-lon").value),
+            },
+            sw: {
+              lat: parseFloat(document.getElementById("sw-lat").value),
+              lon: parseFloat(document.getElementById("sw-lon").value),
+            },
+          },
+          from: document.getElementById("from-date").value,
+          to: document.getElementById("to-date").value,
+        };
+      }
+
+      function setStatus(message, isError = false) {
+        const status = document.getElementById("status-message");
+        status.textContent = message;
+        status.style.color = isError ? "#b02a37" : "#1f6feb";
+      }
+
+      function loadFormFromLocation(index) {
+        const item = locations[index];
+        if (!item) {
+          return;
+        }
+
+        document.getElementById("active").checked = item.active;
+        document.getElementById("name").value = item.name;
+        document.getElementById("from-date").value = item.from;
+        document.getElementById("to-date").value = item.to;
+        document.getElementById("sw-lat").value = item.bounds.sw.lat;
+        document.getElementById("sw-lon").value = item.bounds.sw.lon;
+        document.getElementById("ne-lat").value = item.bounds.ne.lat;
+        document.getElementById("ne-lon").value = item.bounds.ne.lon;
+        updatePreviewMap(item);
+        setStatus(`Loaded "${item.name}" into the form.`);
+      }
+
+      function updatePreviewMap(item) {
+        if (!previewMap) {
+          return;
+        }
+
+        if (previewLayer) {
+          previewMap.removeLayer(previewLayer);
+        }
+        previewMarkers.forEach((marker) => previewMap.removeLayer(marker));
+        previewMarkers = [];
+
+        previewLayer = L.rectangle(
+          [
+            [item.bounds.sw.lat, item.bounds.sw.lon],
+            [item.bounds.ne.lat, item.bounds.ne.lon],
+          ],
+          { color: "#ff5722", weight: 2 }
+        ).addTo(previewMap);
+
+        previewMarkers.push(
+          L.marker([item.bounds.sw.lat, item.bounds.sw.lon])
+            .addTo(previewMap)
+            .bindPopup("SW"),
+          L.marker([item.bounds.ne.lat, item.bounds.ne.lon])
+            .addTo(previewMap)
+            .bindPopup("NE")
+        );
+
+        previewMap.fitBounds([
+          [item.bounds.sw.lat, item.bounds.sw.lon],
+          [item.bounds.ne.lat, item.bounds.ne.lon],
+        ]);
+      }
+
+      function validateLocation(item) {
+        if (!item.name) {
+          return "Please enter a name.";
+        }
+        if (!item.from || !item.to) {
+          return "Please enter both from and to dates.";
+        }
+        if (Number.isNaN(item.bounds.sw.lat) || Number.isNaN(item.bounds.sw.lon)) {
+          return "Please enter valid SW coordinates.";
+        }
+        if (Number.isNaN(item.bounds.ne.lat) || Number.isNaN(item.bounds.ne.lon)) {
+          return "Please enter valid NE coordinates.";
+        }
+        return "";
+      }
+
+      function addLocationFromForm() {
+        const newLocation = getFormLocation();
+        const validationError = validateLocation(newLocation);
+        if (validationError) {
+          setStatus(validationError, true);
+          return;
+        }
+
+        locations.push(newLocation);
+        populatePicker();
+        renderExistingMaps();
+        updatePreviewMap(newLocation);
+        setStatus(`Added "${newLocation.name}" and updated the picker.`);
+      }
+
+      function generateJson() {
+        const item = getFormLocation();
+        const validationError = validateLocation(item);
+        if (validationError) {
+          setStatus(validationError, true);
+          return;
+        }
+        const json = JSON.stringify(item, null, 4);
+        document.getElementById("json-output").value = json;
+        updatePreviewMap(item);
+        setStatus("JSON generated. Copy it from the textarea.");
+      }
+
+      async function copyJson() {
+        const jsonText = document.getElementById("json-output").value;
+        if (!jsonText) {
+          setStatus("Generate the JSON first before copying.", true);
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(jsonText);
+          setStatus("JSON copied to clipboard.");
+        } catch (error) {
+          console.error(error);
+          setStatus("Copy failed. Please copy manually.", true);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchData();
+
+        document.getElementById("load-location").addEventListener("click", () => {
+          const picker = document.getElementById("location-picker");
+          loadFormFromLocation(parseInt(picker.value, 10));
+        });
+
+        document.getElementById("add-location").addEventListener("click", addLocationFromForm);
+        document.getElementById("generate-json").addEventListener("click", generateJson);
+        document.getElementById("copy-json").addEventListener("click", copyJson);
+      });
     </script>
   </body>
 </html>
