@@ -150,7 +150,21 @@
         <div class="map" id="preview-map"></div>
 
         <div class="control-row">
-          <button id="add-location" class="primary" type="button">Add / Update form</button>
+          <div style="flex: 1">
+            <label>Map click picker</label>
+            <div id="last-click" style="padding: 8px; border: 1px solid #ccd3dc; border-radius: 6px; background: #f1f3f5; color: #333; min-height: 42px; display: flex; align-items: center;">
+              Click the preview map to capture coordinates
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end;">
+            <button id="set-sw" class="secondary" type="button">Use as SW</button>
+            <button id="set-ne" class="secondary" type="button">Use as NE</button>
+            <button id="reset-form" class="secondary" type="button">New destination</button>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <button id="add-location" class="primary" type="button">Save location</button>
           <button id="generate-json" class="secondary" type="button">Generate JSON</button>
           <button id="copy-json" class="secondary" type="button">Copy JSON</button>
         </div>
@@ -219,6 +233,8 @@
       let previewMap;
       let previewLayer;
       let previewMarkers = [];
+      let clickCapture = null;
+      let previewSelectionMarker = null;
 
       async function fetchData() {
         try {
@@ -245,17 +261,43 @@
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution: "&copy; OpenStreetMap contributors",
         }).addTo(previewMap);
+        previewMap.on("click", handlePreviewMapClick);
       }
 
       function populatePicker() {
         const picker = document.getElementById("location-picker");
         picker.innerHTML = "";
+
+        const addNewOption = document.createElement("option");
+        addNewOption.value = "new";
+        addNewOption.textContent = "Add new destination";
+        picker.appendChild(addNewOption);
+
         locations.forEach((item, index) => {
           const option = document.createElement("option");
           option.value = index;
           option.textContent = item.name;
           picker.appendChild(option);
         });
+      }
+
+      function clearForm() {
+        document.getElementById("active").checked = true;
+        document.getElementById("name").value = "";
+        document.getElementById("from-date").value = "";
+        document.getElementById("to-date").value = "";
+        document.getElementById("sw-lat").value = "";
+        document.getElementById("sw-lon").value = "";
+        document.getElementById("ne-lat").value = "";
+        document.getElementById("ne-lon").value = "";
+        document.getElementById("json-output").value = "";
+        document.getElementById("last-click").textContent = "Click the preview map to capture coordinates";
+        clickCapture = null;
+        if (previewSelectionMarker) {
+          previewMap.removeLayer(previewSelectionMarker);
+          previewSelectionMarker = null;
+        }
+        setStatus("Ready to add a new destination.");
       }
 
       function renderExistingMaps() {
@@ -407,11 +449,19 @@
           return;
         }
 
-        locations.push(newLocation);
+        const picker = document.getElementById("location-picker");
+        const selectedValue = picker.value;
+        if (selectedValue !== "new" && !Number.isNaN(parseInt(selectedValue, 10))) {
+          locations[parseInt(selectedValue, 10)] = newLocation;
+          setStatus(`Updated "${newLocation.name}" in the picker.`);
+        } else {
+          locations.push(newLocation);
+          setStatus(`Added "${newLocation.name}" and updated the picker.`);
+        }
+
         populatePicker();
         renderExistingMaps();
         updatePreviewMap(newLocation);
-        setStatus(`Added "${newLocation.name}" and updated the picker.`);
       }
 
       function generateJson() {
@@ -442,17 +492,64 @@
         }
       }
 
+      function updateLastClickDisplay() {
+        const display = document.getElementById("last-click");
+        if (!clickCapture) {
+          display.textContent = "Click the preview map to capture coordinates";
+          return;
+        }
+        display.textContent = `Captured: ${clickCapture.lat.toFixed(6)}, ${clickCapture.lng.toFixed(6)}`;
+      }
+
+      function handlePreviewMapClick(event) {
+        clickCapture = event.latlng;
+        if (previewSelectionMarker) {
+          previewMap.removeLayer(previewSelectionMarker);
+        }
+        previewSelectionMarker = L.marker(clickCapture, { opacity: 0.8 }).addTo(previewMap);
+        previewSelectionMarker.bindPopup("Selected coordinate").openPopup();
+        updateLastClickDisplay();
+        setStatus("Coordinate captured. Use SW or NE buttons to assign it.");
+      }
+
+      function assignCapturedCoordinate(side) {
+        if (!clickCapture) {
+          setStatus("Click the preview map first to capture coordinates.", true);
+          return;
+        }
+        if (side === "sw") {
+          document.getElementById("sw-lat").value = clickCapture.lat;
+          document.getElementById("sw-lon").value = clickCapture.lng;
+          setStatus("SW coordinate assigned from map click.");
+        } else {
+          document.getElementById("ne-lat").value = clickCapture.lat;
+          document.getElementById("ne-lon").value = clickCapture.lng;
+          setStatus("NE coordinate assigned from map click.");
+        }
+        const current = getFormLocation();
+        if (!Number.isNaN(current.bounds.sw.lat) && !Number.isNaN(current.bounds.sw.lon) && !Number.isNaN(current.bounds.ne.lat) && !Number.isNaN(current.bounds.ne.lon)) {
+          updatePreviewMap(current);
+        }
+      }
+
       document.addEventListener("DOMContentLoaded", () => {
         fetchData();
 
         document.getElementById("load-location").addEventListener("click", () => {
           const picker = document.getElementById("location-picker");
-          loadFormFromLocation(parseInt(picker.value, 10));
+          if (picker.value === "new") {
+            clearForm();
+          } else {
+            loadFormFromLocation(parseInt(picker.value, 10));
+          }
         });
 
         document.getElementById("add-location").addEventListener("click", addLocationFromForm);
         document.getElementById("generate-json").addEventListener("click", generateJson);
         document.getElementById("copy-json").addEventListener("click", copyJson);
+        document.getElementById("set-sw").addEventListener("click", () => assignCapturedCoordinate("sw"));
+        document.getElementById("set-ne").addEventListener("click", () => assignCapturedCoordinate("ne"));
+        document.getElementById("reset-form").addEventListener("click", clearForm);
       });
     </script>
   </body>
