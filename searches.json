@@ -1,4 +1,20 @@
 [{
+    "active": true,
+    "name": "Salone del Mobile Milano",
+    "bounds": {
+        "ne": {
+            "lat": 45.48370894153833,
+            "lon": 9.216083586215975
+        },
+        "sw": {
+            "lat": 45.44263921284427,
+            "lon": 9.151954650878908
+        }
+    },
+    "from": "2027-04-09",
+    "to": "2027-04-11"
+},
+        {
         "active": true,
         "name": "mallorca mayo 2026 2",
         "bounds": {
