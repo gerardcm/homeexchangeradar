@@ -1,5 +1,20 @@
 [{
     "active": true,
+    "name": "Eclipse 2027",
+    "bounds": {
+        "ne": {
+            "lat": 37.69613674331281,
+            "lon": -0.4702486705825271
+        },
+        "sw": {
+            "lat": 35.88626858855547,
+            "lon": -9.13500750429332
+        }
+    },
+    "from": "2027-08-01",
+    "to": "2027-08-02"
+},{
+    "active": true,
     "name": "Berlin Berghain",
     "bounds": {
         "ne": {
