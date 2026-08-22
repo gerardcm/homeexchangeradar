@@ -125,21 +125,21 @@
         "to": ""
     },
     {
-        "active": false,
-        "name": "Central London Anytime",
-        "bounds": {
-            "ne": {
+    "active": true,
+    "name": "Central London December 2026",
+    "bounds": {
+        "ne": {
             "lat": 51.529581323085495,
             "lon": -0.09022292974470661
-            },
-            "sw": {
+        },
+        "sw": {
             "lat": 51.49713410207135,
             "lon": -0.16191283079675187
-            }
-        },
-        "from": "",
-        "to": ""
+        }
     },
+    "from": "2026-12-05",
+    "to": "2026-12-08"
+},
     {
         "active": false,
         "name": "Los angeles April 2026",
