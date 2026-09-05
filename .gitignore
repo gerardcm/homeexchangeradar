@@ -1,0 +1,10 @@
+# Secrets — Telegram token, HomeExchange session cookie, calendar bearer
+# token, and your local notification-history path. Never commit this.
+secrets.json
+
+# Runtime state
+notificationHistory.json
+
+__pycache__/
+*.pyc
+.DS_Store
