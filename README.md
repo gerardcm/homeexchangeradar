@@ -3,6 +3,8 @@
 Checks your saved HomeExchange searches (defined in `searches.json`, hosted
 in this repo) and pings you on Telegram when a new listing shows up.
 
+https://gerardcm.github.io/homeexchangeradar/
+
 ## Setup
 
 ```bash
