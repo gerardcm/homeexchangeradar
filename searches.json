@@ -109,6 +109,7 @@
                         {
         "active": true,
         "name": "Solar eclipse 2026",
+        "exchange_type": "guestpoints",
         "bounds": {
             "ne": {
             "lat": 40.422534344261,
@@ -173,6 +174,7 @@
     {
     "active": true,
     "name": "Central London December 2026",
+    "exchange_type": "guestpoints",
     "bounds": {
         "ne": {
             "lat": 51.529581323085495,
@@ -188,6 +190,7 @@
 },{
     "active": true,
     "name": "London December 2026",
+    "exchange_type": "guestpoints",
     "bounds": {
         "ne": {
             "lat": 51.54406648925671,
