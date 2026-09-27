@@ -47,6 +47,7 @@
     {
     "active": true,
     "name": "Eclipse 2027",
+    "exchange_type": "guestpoints",
     "bounds": {
         "ne": {
             "lat": 37.69613674331281,
@@ -109,7 +110,6 @@
                         {
         "active": true,
         "name": "Solar eclipse 2026",
-        "exchange_type": "guestpoints",
         "bounds": {
             "ne": {
             "lat": 40.422534344261,
