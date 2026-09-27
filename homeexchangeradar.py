@@ -11,7 +11,11 @@ calendar API bearer token) and the local notification-history path live in a
 local secrets.json next to this script -- never in this file, never in git.
 See secrets.example.json for the shape.
 
-TODO Search for non reciprocal also
+Each search in searches.json can set "exchange_type" to "guestpoints" to
+only match homes open to a GuestPoints stay, or leave it unset/"all" (the
+default) to match both GuestPoints and reciprocal-swap homes -- see
+EXCHANGE_TYPE_PRESETS below.
+
 TODO Calendar check
 """
 
@@ -24,6 +28,20 @@ import requests
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SECRETS_PATH = os.environ.get("HOMEEXCHANGERADAR_SECRETS", os.path.join(SCRIPT_DIR, "secrets.json"))
+
+# search["exchange_type"] -> value for the HomeExchange search API's
+# search_query.calendar.exchange_types field (reverse-engineered from the
+# live site's own search filters -- see the "Exchange type" panel at
+# homeexchange.com/search-v2). "all" (the default when a search doesn't set
+# this) omits the field entirely, which matches every exchange type.
+# "guestpoints" uses the same ["available", "guest-wanted"] combo the site's
+# own UI recommends for "all homes open to GuestPoints exchanges" -- this
+# includes reciprocal-first homes that also accept GuestPoints, not just
+# GuestPoints-only listings.
+EXCHANGE_TYPE_PRESETS = {
+    "all": None,
+    "guestpoints": ["available", "guest-wanted"],
+}
 
 
 def load_secrets(path):
@@ -97,8 +115,20 @@ def check_exchanges(search, secrets, headers, notified_flag):
         flexibility = int(search.get("flexibility", 0))
     except Exception:
         flexibility = 0
+
+    exchange_type = search.get("exchange_type", "all")
+    exchange_types = EXCHANGE_TYPE_PRESETS.get(exchange_type)
+    if exchange_type not in EXCHANGE_TYPE_PRESETS:
+        print(f"Unknown exchange_type {exchange_type!r} for search {search['name']!r}, "
+              f"defaulting to 'all'", file=sys.stderr)
+
+    calendar = {}
     if flexibility > 0:
-        payload["search_query"]["calendar"] = {"flexibility": flexibility}
+        calendar["flexibility"] = flexibility
+    if exchange_types:
+        calendar["exchange_types"] = exchange_types
+    if calendar:
+        payload["search_query"]["calendar"] = calendar
 
     payload = json.loads(json.dumps(payload))
     if search["from"] == "":
