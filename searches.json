@@ -47,7 +47,6 @@
     {
     "active": true,
     "name": "Eclipse 2027",
-    "exchange_type": "guestpoints",
     "bounds": {
         "ne": {
             "lat": 37.69613674331281,
@@ -174,7 +173,6 @@
     {
     "active": true,
     "name": "Central London December 2026",
-    "exchange_type": "guestpoints",
     "bounds": {
         "ne": {
             "lat": 51.529581323085495,
