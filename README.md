@@ -49,8 +49,22 @@ pip install requests
 python3 homeexchangeradar.py
 ```
 
-Point Synology Task Scheduler (or cron) at that command on whatever cadence
-you want checks to run.
+## Running it on a schedule
+
+Point Synology Task Scheduler (or cron, or a systemd timer) at `run.sh`
+instead of running `homeexchangeradar.py` directly — it does a
+`git pull --ff-only` before every run, so the script itself (not just
+`searches.json`) always picks up the latest fix without a manual redeploy:
+
+```bash
+bash run.sh
+```
+
+It must live inside a real git checkout of this repo for the pull to work;
+`secrets.json` stays local and untouched. If you were pointing the
+scheduler straight at `python3 homeexchangeradar.py` before, switch it to
+`run.sh` now — otherwise code fixes pushed to GitHub never reach wherever
+it's actually running.
 
 ## Notes
 
