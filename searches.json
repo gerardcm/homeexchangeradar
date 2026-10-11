@@ -76,7 +76,7 @@
     "from": "2027-08-01",
     "to": "2027-08-02"
 },{
-    "active": true,
+    "active": false,
     "name": "Berlin Berghain",
     "bounds": {
         "ne": {
