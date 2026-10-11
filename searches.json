@@ -1,6 +1,7 @@
 [{
     "active": true,
     "name": "Nice December",
+    "exchange_types": ["all", "gp"],
     "bounds": {
         "ne": {
             "lat": 43.70488673381352,
@@ -203,7 +204,7 @@
 },{
     "active": true,
     "name": "London December 2026",
-    "exchange_type": "guestpoints",
+    "exchange_types": ["all", "gp"],
     "bounds": {
         "ne": {
             "lat": 51.54406648925671,

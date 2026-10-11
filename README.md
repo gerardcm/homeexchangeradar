@@ -20,19 +20,22 @@ never leaves your machine/NAS.
 fetched at runtime from the raw GitHub URL — edit it here and every run
 picks up the change automatically, no redeploy needed.
 
-Each search entry can set `"exchange_type"` to control which kind of
-exchange it matches:
+Each search entry can set `"exchange_types"` to a list matching the site's
+own "Exchange type" filter chips:
 
-| Value | Matches |
-|---|---|
-| `"all"` (default, or omitted) | Both reciprocal swaps and GuestPoints stays |
-| `"guestpoints"` | Homes open to a GuestPoints stay (includes reciprocal-first homes that also accept GuestPoints, same as HomeExchange's own "see all homes open to GuestPoints exchanges" filter) |
+| Value | Site chip | Sent to the API as |
+|---|---|---|
+| `"all"` | All types | `available` |
+| `"gp"` | Guest points | `guest-wanted` |
+
+Use `["all", "gp"]` to tick both, same as the site does. Leave the key out
+for no filter at all, which also includes reciprocal homes.
 
 ```json
 {
     "active": true,
     "name": "Central Paris 27",
-    "exchange_type": "guestpoints",
+    "exchange_types": ["all", "gp"],
     "bounds": { "...": "..." },
     "from": "2027-06-19",
     "to": "2027-06-20"

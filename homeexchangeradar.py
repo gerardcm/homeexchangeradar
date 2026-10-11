@@ -11,10 +11,10 @@ calendar API bearer token) and the local notification-history path live in a
 local secrets.json next to this script -- never in this file, never in git.
 See secrets.example.json for the shape.
 
-Each search in searches.json can set "exchange_type" to "guestpoints" to
-only match homes open to a GuestPoints stay, or leave it unset/"all" (the
-default) to match both GuestPoints and reciprocal-swap homes -- see
-EXCHANGE_TYPE_PRESETS below.
+Each search in searches.json can set "exchange_types" to a list of the
+site's own exchange-type filters: "all" ("All types"), "gp" ("Guest
+points"), or both. Leave it unset for no filter at all -- see
+EXCHANGE_TYPE_TOKENS below.
 
 TODO Calendar check
 """
@@ -29,21 +29,20 @@ import requests
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SECRETS_PATH = os.environ.get("HOMEEXCHANGERADAR_SECRETS", os.path.join(SCRIPT_DIR, "secrets.json"))
 
-# search["exchange_type"] -> value for the HomeExchange search API's
-# search_query.calendar.exchange_types field (reverse-engineered from the
-# live site's own search filters -- see the "Exchange type" panel at
-# homeexchange.com/search-v2). "all" (the default when a search doesn't set
-# this) omits the field entirely, which matches every exchange type
-# (reciprocal + GuestPoints).
-# "guestpoints" uses the same ["available", "guest-wanted"] combo the site's
-# own UI recommends for "all homes open to GuestPoints exchanges".
+# search["exchange_types"] entries -> values for the HomeExchange search API's
+# search_query.calendar.exchange_types field (as sent by the site's own
+# "Exchange type" filter at homeexchange.com/search-v2):
+#   "all" -> "available"    ("All types")
+#   "gp"  -> "guest-wanted" ("Guest points")
+# Ticking both on the site sends both. A search that sets neither omits the
+# field entirely, which is unfiltered (includes reciprocal homes too).
 #
 # NOTE: do NOT send availability.reciprocal. The old hardcoded
 # "reciprocal": False silently excluded every reciprocal home (London Dec
 # 2026: 6 results vs 34 unfiltered), so no reciprocal match was ever seen.
-EXCHANGE_TYPE_PRESETS = {
-    "all": None,
-    "guestpoints": ["available", "guest-wanted"],
+EXCHANGE_TYPE_TOKENS = {
+    "all": "available",
+    "gp": "guest-wanted",
 }
 
 
@@ -112,11 +111,18 @@ def check_exchanges(search, secrets, headers, notified_flag):
     except Exception:
         flexibility = 0
 
-    exchange_type = search.get("exchange_type", "all")
-    exchange_types = EXCHANGE_TYPE_PRESETS.get(exchange_type)
-    if exchange_type not in EXCHANGE_TYPE_PRESETS:
-        print(f"Unknown exchange_type {exchange_type!r} for search {search['name']!r}, "
-              f"defaulting to 'all'", file=sys.stderr)
+    requested = search.get("exchange_types") or []
+    if isinstance(requested, str):
+        requested = [requested]
+    exchange_types = []
+    for token in requested:
+        api_value = EXCHANGE_TYPE_TOKENS.get(token)
+        if api_value is None:
+            print(f"Unknown exchange_types value {token!r} for search "
+                  f"{search['name']!r} (expected one of "
+                  f"{sorted(EXCHANGE_TYPE_TOKENS)}), ignoring it", file=sys.stderr)
+        elif api_value not in exchange_types:
+            exchange_types.append(api_value)
 
     calendar = {}
     if flexibility > 0:
