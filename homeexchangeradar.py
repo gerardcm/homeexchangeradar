@@ -33,11 +33,14 @@ SECRETS_PATH = os.environ.get("HOMEEXCHANGERADAR_SECRETS", os.path.join(SCRIPT_D
 # search_query.calendar.exchange_types field (reverse-engineered from the
 # live site's own search filters -- see the "Exchange type" panel at
 # homeexchange.com/search-v2). "all" (the default when a search doesn't set
-# this) omits the field entirely, which matches every exchange type.
+# this) omits the field entirely, which matches every exchange type
+# (reciprocal + GuestPoints).
 # "guestpoints" uses the same ["available", "guest-wanted"] combo the site's
-# own UI recommends for "all homes open to GuestPoints exchanges" -- this
-# includes reciprocal-first homes that also accept GuestPoints, not just
-# GuestPoints-only listings.
+# own UI recommends for "all homes open to GuestPoints exchanges".
+#
+# NOTE: do NOT send availability.reciprocal. The old hardcoded
+# "reciprocal": False silently excluded every reciprocal home (London Dec
+# 2026: 6 results vs 34 unfiltered), so no reciprocal match was ever seen.
 EXCHANGE_TYPE_PRESETS = {
     "all": None,
     "guestpoints": ["available", "guest-wanted"],
@@ -92,13 +95,6 @@ def check_exchanges(search, secrets, headers, notified_flag):
             "location": {
                 "bounds": search["bounds"]
             },
-            "availability": {
-                "date_range": {
-                    "from": search["from"],
-                    "to": search["to"]
-                },
-                "reciprocal": False
-            },
             "home": {
                 "is_private_room": False,
                 "size": {
@@ -130,9 +126,12 @@ def check_exchanges(search, secrets, headers, notified_flag):
     if calendar:
         payload["search_query"]["calendar"] = calendar
 
-    payload = json.loads(json.dumps(payload))
-    if search["from"] == "":
-        del payload["search_query"]["availability"]["date_range"]
+    # Anytime searches (no "from") must omit "availability" entirely: the API
+    # returns HTTP 500 for an empty availability object.
+    if search.get("from"):
+        payload["search_query"]["availability"] = {
+            "date_range": {"from": search["from"], "to": search["to"]},
+        }
 
     try:
         resp = requests.post(url, headers=headers, data=json.dumps(payload), timeout=15)
