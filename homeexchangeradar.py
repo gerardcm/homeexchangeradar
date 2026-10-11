@@ -78,6 +78,8 @@ def build_home_exchange_headers(secrets):
 
 
 def load_notification_history(path):
+    if not os.path.exists(path):
+        return {"homes": {}, "calendars": {}}
     with open(path, 'r') as f:
         return json.load(f)
 
