@@ -189,6 +189,7 @@
     {
     "active": true,
     "name": "Central London December 2026",
+    "exchange_types": ["all", "gp"],
     "bounds": {
         "ne": {
             "lat": 51.529581323085495,
