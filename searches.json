@@ -1,5 +1,20 @@
 [{
     "active": true,
+    "name": "Nice December",
+    "bounds": {
+        "ne": {
+            "lat": 43.70488673381352,
+            "lon": 7.299385070800781
+        },
+        "sw": {
+            "lat": 43.68502575388037,
+            "lon": 7.259291075170041
+        }
+    },
+    "from": "2026-12-05",
+    "to": "2026-12-07"
+},{
+    "active": true,
     "name": "Kuala Lumpur",
     "bounds": {
         "ne": {
