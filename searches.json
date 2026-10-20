@@ -1,5 +1,20 @@
 [{
     "active": true,
+    "name": "Vielha JAnuary",
+    "bounds": {
+        "ne": {
+            "lat": 42.80220225103305,
+            "lon": 1.2771606445312502
+        },
+        "sw": {
+            "lat": 42.59631275983283,
+            "lon": 0.6921386718750001
+        }
+    },
+    "from": "2027-01-05",
+    "to": "2027-01-06"
+},{
+    "active": true,
     "name": "Nice December",
     "exchange_types": ["all", "gp"],
     "bounds": {
