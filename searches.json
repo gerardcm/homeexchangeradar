@@ -1,5 +1,20 @@
 [{
     "active": true,
+    "name": "PAris maison and object",
+    "bounds": {
+        "ne": {
+            "lat": 48.884606882988805,
+            "lon": 2.3790550231933594
+        },
+        "sw": {
+            "lat": 48.87100291008087,
+            "lon": 2.338628768920899
+        }
+    },
+    "from": "2027-01-14",
+    "to": "2027-01-18"
+},{
+    "active": true,
     "name": "Vielha JAnuary",
     "bounds": {
         "ne": {
